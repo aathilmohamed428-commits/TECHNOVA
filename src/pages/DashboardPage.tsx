@@ -16,7 +16,6 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   onNavigateTab
 }) => {
   const inspections = useLiveQuery(() => db.inspections.orderBy('timestamp').reverse().toArray()) || [];
-  const products = useLiveQuery(() => db.products.toArray()) || [];
   const complaints = useLiveQuery(() => db.complaints.toArray()) || [];
 
   const totalInspections = inspections.length;
@@ -26,25 +25,25 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
 
   return (
     <div className="p-8 space-y-8 max-w-7xl mx-auto">
-      {/* Top Banner */}
-      <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-blue-950 rounded-2xl p-6 text-white shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-6">
+      {/* Top Hero Banner in Indigo Gradient */}
+      <div className="bg-gradient-to-r from-indigo-900 via-indigo-800 to-slate-900 rounded-2xl p-6 text-white shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-6 border border-indigo-700/50">
         <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-xs font-semibold border border-blue-400/30">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-teal-500/20 text-teal-300 rounded-full text-xs font-semibold border border-teal-400/30">
             <ShieldAlert className="w-3.5 h-3.5" />
             <span>AI Enforcement Assistant Active</span>
           </div>
           <h2 className="text-2xl font-bold tracking-tight">Packaged Commodities Compliance Dashboard</h2>
-          <p className="text-slate-300 text-xs max-w-2xl leading-relaxed">
+          <p className="text-slate-200 text-xs max-w-2xl leading-relaxed">
             Real-time computer vision, OCR text extraction, and legal rule validation under Legal Metrology (Packaged Commodities) Rules, 2011.
           </p>
         </div>
 
         <button
           onClick={onStartInspection}
-          className="bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm px-6 py-3.5 rounded-xl transition shadow-lg flex items-center justify-center gap-3 shrink-0 active:scale-95"
+          className="bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm px-6 py-3.5 rounded-xl transition shadow-lg flex items-center justify-center gap-3 shrink-0 active:scale-95"
         >
           <Camera className="w-5 h-5" />
-          <span>START LIVE CAMERA INSPECTION</span>
+          <span>START NEW INSPECTION</span>
         </button>
       </div>
 
@@ -53,18 +52,18 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
         <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-2">
           <div className="flex items-center justify-between text-slate-500 text-xs font-semibold">
             <span>Total Inspections</span>
-            <Layers className="w-4 h-4 text-blue-600" />
+            <Layers className="w-4 h-4 text-indigo-600" />
           </div>
-          <div className="text-3xl font-extrabold text-slate-900">{totalInspections}</div>
+          <div className="text-3xl font-extrabold text-indigo-900">{totalInspections}</div>
           <div className="text-[11px] text-slate-500 font-medium">Stored in IndexedDB</div>
         </div>
 
         <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-2">
           <div className="flex items-center justify-between text-slate-500 text-xs font-semibold">
             <span>Compliant Packages</span>
-            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+            <CheckCircle2 className="w-4 h-4 text-teal-600" />
           </div>
-          <div className="text-3xl font-extrabold text-emerald-600">{compliantCount}</div>
+          <div className="text-3xl font-extrabold text-teal-600">{compliantCount}</div>
           <div className="text-[11px] text-slate-500 font-medium">{complianceRate}% Pass Rate</div>
         </div>
 
@@ -80,23 +79,23 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
         <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-2">
           <div className="flex items-center justify-between text-slate-500 text-xs font-semibold">
             <span>Active Complaints</span>
-            <FileText className="w-4 h-4 text-amber-600" />
+            <FileText className="w-4 h-4 text-orange-500" />
           </div>
-          <div className="text-3xl font-extrabold text-amber-600">{complaints.length}</div>
+          <div className="text-3xl font-extrabold text-orange-500">{complaints.length}</div>
           <div className="text-[11px] text-slate-500 font-medium">Consumer Submissions</div>
         </div>
       </div>
 
       {/* Recent Inspections Section */}
       <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden space-y-0">
-        <div className="p-5 border-b border-slate-200 flex items-center justify-between">
+        <div className="p-5 border-b border-slate-200 flex items-center justify-between bg-slate-50/50">
           <div>
             <h3 className="font-bold text-slate-900 text-base">Recent Package Inspections</h3>
             <p className="text-xs text-slate-500">Live inspection records with full evidence trace</p>
           </div>
           <button
             onClick={() => onNavigateTab('history')}
-            className="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1"
+            className="text-xs font-semibold text-indigo-600 hover:text-indigo-700 flex items-center gap-1"
           >
             <span>View All History</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -108,11 +107,11 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             <Camera className="w-10 h-10 text-slate-300 mx-auto" />
             <div className="text-sm font-semibold text-slate-700">No Package Inspections Yet</div>
             <p className="text-xs text-slate-500 max-w-sm mx-auto">
-              Place a physical product in front of your camera to trigger automated view detection, real OCR, and compliance checking.
+              Upload package dataset images or place a product in front of your camera to trigger automated view detection, real OCR, and compliance checking.
             </p>
             <button
               onClick={onStartInspection}
-              className="inline-flex items-center gap-2 bg-blue-600 text-white text-xs font-semibold px-4 py-2 rounded-lg"
+              className="inline-flex items-center gap-2 bg-indigo-600 text-white text-xs font-semibold px-4 py-2 rounded-lg"
             >
               Start First Inspection
             </button>
@@ -141,7 +140,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                   <div>
                     <div className="flex items-center gap-2">
                       <span className="font-bold text-slate-900 text-sm">{insp.productName}</span>
-                      <span className="mono-font text-[10px] text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded">
+                      <span className="mono-font text-[10px] text-indigo-700 bg-indigo-50 px-1.5 py-0.5 rounded border border-indigo-100">
                         {insp.inspectionNumber}
                       </span>
                     </div>
@@ -158,10 +157,10 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                   <span
                     className={`text-xs font-bold px-2.5 py-1 rounded-full border ${
                       insp.status === 'COMPLIANT'
-                        ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                        ? 'bg-teal-50 text-teal-700 border-teal-200'
                         : insp.status === 'NON_COMPLIANT'
                         ? 'bg-rose-50 text-rose-700 border-rose-200'
-                        : 'bg-amber-50 text-amber-700 border-amber-200'
+                        : 'bg-orange-50 text-orange-700 border-orange-200'
                     }`}
                   >
                     {insp.status.replace('_', ' ')}
